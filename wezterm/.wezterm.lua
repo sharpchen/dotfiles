@@ -1,9 +1,9 @@
-local wezterm = require('wezterm')
+local wezterm = require("wezterm")
 
 local config = wezterm.config_builder()
 
-config.animation_fps = 30
-config.default_prog = { 'nu' }
+config.animation_fps = 60
+config.default_prog = { "nu" }
 config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
 config.window_decorations = "RESIZE"
 config.hide_tab_bar_if_only_one_tab = false
@@ -11,6 +11,15 @@ config.tab_bar_at_bottom = true
 config.use_fancy_tab_bar = false
 config.tab_and_split_indices_are_zero_based = true
 config.color_scheme = "tokyonight"
+config.cursor_blink_rate = 500
+config.font_size = 14
+config.font_rules = {
+	{
+		intensity = "Bold",
+		italic = false,
+		font = wezterm.font("JetBrains Mono", { weight = "Bold" }),
+	},
+}
 local mux = wezterm.mux
 
 wezterm.on("gui-startup", function(cmd)
@@ -32,12 +41,12 @@ wezterm.on("update-right-status", function(window, _)
 		ARROW_FOREGROUND = { Foreground = { Color = "#1e2030" } }
 	end -- arrow color based on if tab is first pane
 
-	window:set_left_status(wezterm.format {
+	window:set_left_status(wezterm.format({
 		{ Background = { Color = "#b7bdf8" } },
 		{ Text = prefix },
 		ARROW_FOREGROUND,
-		{ Text = SOLID_LEFT_ARROW }
-	})
+		{ Text = SOLID_LEFT_ARROW },
+	}))
 end)
 
 local act = wezterm.action
@@ -46,72 +55,72 @@ config.keys = {
 	{
 		mods = "LEADER",
 		key = "c",
-		action = wezterm.action.SpawnTab "CurrentPaneDomain",
+		action = wezterm.action.SpawnTab("CurrentPaneDomain"),
 	},
 	{
 		mods = "LEADER",
 		key = "x",
-		action = wezterm.action.CloseCurrentPane { confirm = true }
+		action = wezterm.action.CloseCurrentPane({ confirm = true }),
 	},
 	{
 		mods = "LEADER",
 		key = "b",
-		action = wezterm.action.ActivateTabRelative(-1)
+		action = wezterm.action.ActivateTabRelative(-1),
 	},
 	{
-		mods = "LEADER"
+		mods = "LEADER",
 		key = "n",
-		action = wezterm.action.ActivateTabRelative(1)
+		action = wezterm.action.ActivateTabRelative(1),
 	},
 	{
 		mods = "LEADER",
 		key = "|",
-		action = wezterm.action.SplitHorizontal { domain = "CurrentPaneDomain" }
+		action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }),
 	},
 	{
 		mods = "LEADER",
 		key = "-",
-		action = wezterm.action.SplitVertical { domain = "CurrentPaneDomain" }
+		action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }),
 	},
 	{
 		mods = "LEADER",
 		key = "h",
-		action = wezterm.action.ActivatePaneDirection "Left"
+		action = wezterm.action.ActivatePaneDirection("Left"),
 	},
 	{
 		mods = "LEADER",
 		key = "j",
-		action = wezterm.action.ActivatePaneDirection "Down"
+		action = wezterm.action.ActivatePaneDirection("Down"),
 	},
 	{
 		mods = "LEADER",
 		key = "k",
-		action = wezterm.action.ActivatePaneDirection "Up"
+		action = wezterm.action.ActivatePaneDirection("Up"),
 	},
 	{
 		mods = "LEADER",
 		key = "l",
-		action = wezterm.action.ActivatePaneDirection "Right"
+		action = wezterm.action.ActivatePaneDirection("Right"),
 	},
 	{
 		mods = "LEADER",
 		key = "LeftArrow",
-		action = wezterm.action.AdjustPaneSize { "Left", 5 }
+		action = wezterm.action.AdjustPaneSize({ "Left", 5 }),
 	},
 	{
 		mods = "LEADER",
 		key = "RightArrow",
-		action = wezterm.action.AdjustPaneSize { "Right", 5 }
+		action = wezterm.action.AdjustPaneSize({ "Right", 5 }),
 	},
 	{
 		mods = "LEADER",
 		key = "DownArrow",
-		action = wezterm.action.AdjustPaneSize { "Down", 5 }
+		action = wezterm.action.AdjustPaneSize({ "Down", 5 }),
 	},
 	{
 		mods = "LEADER",
 		key = "UpArrow",
-		action = wezterm.action.AdjustPaneSize { "Up", 5 }
+		action = wezterm.action.AdjustPaneSize({ "Up", 5 }),
 	},
 }
 config.mouse_bindings = {
